@@ -1,8 +1,12 @@
 // SortedDriver.cpp
 
 // tom bailey   1445  25 mar 2014
-// Construct sorted sequences and call functions that 
+// Construct sorted sequences and call functions that
 //   process the sorted sequences.
+
+// Corey Hoven 20:15 29 October 2017
+// completed stub functions to derive most isolated
+//   and unique words in set A
 
 
 #include "RandomUtilities.h"
@@ -57,14 +61,30 @@ getWords(size_t numWords, size_t wordLength, string alphabet)
 }
 
 
-// pre:  number is not empty; 
+// pre:  number is not empty;
 //       number is sorted from smallest to largest
 // post: The most isolated entry in number has been returned
 double
 mostIsolated(vector<double> & number)
 {
-	// STUB  STUB  STUB
-	return -123.456;
+    double Check=number[1]-number[0];
+    unsigned int Index=0, i=0;
+    for (i=1;i<number.size();i++)
+    {
+        if ((min((number[i]-number[i-1]),(number[i+1]-number[i]))) > Check)
+        {
+            Index=i;
+            Check = min((number[i]-number[i-1]),(number[i+1]-number[i]));
+        }
+
+
+    }
+    if (Check < number[i]-number[i-1])
+    {
+        Index = i;
+    }
+
+	return number[Index];
 }
 
 
@@ -74,8 +94,35 @@ mostIsolated(vector<double> & number)
 int
 unmatched(list<string> & A, list<string> & B)
 {
-	// STUB  STUB  STUB
-	return -1;
+    unsigned int Counted=0;
+    list<string> C = A;
+    list<string> D = B;
+    while (!C.empty() && !D.empty())
+    {
+        if (C.front()==D.front())
+        {
+            C.pop_front();
+        }
+        else if (C.front()<D.front())
+        {
+            C.pop_front();
+            Counted++;
+        }
+        else if (C.front()>D.front())
+        {
+            D.pop_front();
+        }
+    }
+    while (!C.empty())
+    {
+        C.pop_front();
+        Counted++;
+    }
+    while (!D.empty())
+    {
+        D.pop_front();
+    }
+    return Counted;
 }
 
 
